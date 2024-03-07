@@ -1,0 +1,7 @@
+{% extends 'app/base.html' %} {% block content %}
+<h1>Ticket Page</h1>
+<h2>{{ticket.title}}</h2>
+<h3>{{ticket.description}}</h3>
+{% for ticketComments in ticket.ticketcomment_set.all %}
+<h4>{{ticketComments.comment}}</h4>
+{% endfor %} {% endblock %} ```

@@ -1,3 +1,64 @@
-from django.shortcuts import render
-
+from datetime import datetime
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.http import HttpResponse
+from .models import Ticket
+from .forms import TicketDetailForm, TicketInitialForm
 # Create your views here.
+
+def index(response):
+    tickets = Ticket.objects.all()
+    if response.method == "POST":
+        form = TicketInitialForm(response.POST)
+        if form.is_valid():
+            n = form.cleaned_data["title"]
+            d = ""
+            p = "low"
+            t = Ticket(title=n, description=d, priority=p, date=datetime.now())
+            t.save()
+            
+            # Redirect to editticket view with the ID of the newly created ticket
+            return redirect(reverse('editticket', args=[t.id]))
+    else:
+        form = TicketInitialForm()
+        return render(response, "app/home.html", {"tickets": tickets, "form": form})
+
+    tickets = Ticket.objects.all()
+    if response.method == "POST":
+        form = TicketInitialForm(response.POST)
+        if form.is_valid():
+            n = form.cleaned_data["title"]
+            d = ""
+            p = "low"
+            t = Ticket(title=n, description=d, priority=p, date=datetime.now(), closed=False)
+            t.save()
+    else:
+        form = TicketInitialForm()
+    return render(response, "app/home.html", {"tickets": tickets, "form": form})
+
+def ticket(response, id):
+    ticket = Ticket.objects.get(id=id)
+    return render(response, "app/ticket.html", {"ticket": ticket})
+
+def editticket(response, id):
+    ticket = Ticket.objects.get(id=id)
+    print(ticket)
+    if response.method == "POST":
+        if ticket.status == "draft":
+            form = TicketDetailForm(response.POST)
+            if form.is_valid():
+                n = form.cleaned_data["title"]
+                d = form.cleaned_data["description"]
+                p = form.cleaned_data["priority"]
+                t = Ticket.objects.get(id=id)
+                t.title = n
+                t.description = d
+                t.priority = p
+                t.status = "inProgress"
+                t.save()
+        else: 
+            print("Ticket is not a draft. Cannot edit.")
+    else:
+        form = TicketDetailForm(initial={"title": ticket.title, "description": ticket.description, "priority": ticket.priority})
+        
+    return render(response, "app/editticket.html", {"ticket": ticket, "form": form})
