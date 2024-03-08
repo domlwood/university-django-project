@@ -1,7 +1,21 @@
-{% extends 'app/base.html' %} {% block content %}
-<h1>Ticket Page</h1>
-<h2>{{ticket.title}}</h2>
-<h3>{{ticket.description}}</h3>
-{% for ticketComments in ticket.ticketcomment_set.all %}
-<h4>{{ticketComments.comment}}</h4>
-{% endfor %} {% endblock %} ```
+{% extends 'app/base.html' %} {% load crispy_forms_tags %} {% block title %}
+Help Desk - View Ticket {% endblock %} {% block content %}
+<div class="row gap-4">
+  <div class="col bg-white p-4 rounded">
+    <h1 class="fs-2">Ticket Information</h1>
+    <hr />
+    <p class="pt-2 m-0"><b>Ticket Title:</b> {{ticket.title}}</p>
+    <p class="pb-2"><b>Ticket Priority:</b> {{ticket.priority}}</p>
+    <p><b>Ticket Description:</b> {{ticket.description}}</p>
+  </div>
+  <div class="col bg-white p-4 rounded">
+    {% for ticketComments in ticket.ticketcomment_set.all %}
+    <h4>{{ticketComments.comment}}</h4>
+    {% endfor %}
+    <form class="w-100 col-sm-12 col-md-8 col-lg-6" method="post">
+      {% csrf_token %} {{ form|crispy }}
+      <button class="btn btn-dark" type="submit" name="save">Comment</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

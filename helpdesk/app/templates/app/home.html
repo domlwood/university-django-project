@@ -9,6 +9,10 @@ Home {% endblock %} {% block head %}
     background: none;
   }
 
+  p {
+    margin-bottom: 0 !important;
+  }
+
   form {
     display: flex;
     align-items: center;
@@ -33,6 +37,8 @@ Home {% endblock %} {% block head %}
     background: none;
     font-size: 16px;
     font-weight: 300;
+    background-color: white;
+    border-radius: 6px;
   }
 
   #id_title:placeholder {
@@ -51,15 +57,59 @@ Home {% endblock %} {% block head %}
     border-color: #35cb00;
   }
 
+  .status-text {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+
+  .draft-text {
+    color: #bababa;
+  }
+
+  .inProgress-text {
+    color: #ff9900;
+  }
+
+  .complete-text {
+    color: #35cb00;
+  }
+
+  .status-ball {
+    height: 10px;
+    width: 10px;
+    border-radius: 50vh;
+  }
+
+  .draft-fill {
+    background-color: #bababa;
+  }
+
+  .inProgress-fill {
+    background-color: #ff9900;
+  }
+
+  .complete-fill {
+    background-color: #35cb00;
+  }
   form p {
     margin-bottom: 0 !important;
     width: 100%;
     height: 100%;
   }
+  .max-height {
+    height:100vh;
+    max-height: 100vh;
+  }
+
+  .shadow-effect:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  }
+
 </style>
 {% endblock %} {% block content %}
-<div class="row justify-content-md-center">
-  <div class="col-sm-12 col-lg-8 m-auto">
+<div class="max-height row justify-content-md-center">
+  <div class="col-sm-12 col-md-8 col-lg-6 m-auto">
     <h2 class="fs-4 tight">Open a Ticket</h2>
     <form method="post">
       {% csrf_token %} {{form.as_p}}
@@ -69,16 +119,23 @@ Home {% endblock %} {% block head %}
     </form>
   </div>
 
-  <div class="pt-5 col-sm-12 col-lg-8 m-auto">
+  <div class="overflow-auto pt-5 col-sm-12 col-lg-8 m-auto">
     <h2 class="fs-4 tight font-weight-light">My Tickets</h2>
     {%for ticket in tickets%}
     <a
       href="{% if ticket.status == 'draft' %}{% url 'editticket' ticket.id %}{% else %}{% url 'ticket' ticket.id %}{% endif %}"
-      class="{{ ticket.status }} text-decoration-none p-2 ticket-card mb-2 fw-light"
+      class="{{ ticket.status }} shadow-effect bg-white text-decoration-none px-3 py-4 ticket-card mb-2 fw-light d-flex justify-content-between align-items-center"
     >
-      <p class="m-0">{{ticket.title}}</p>
+      <div class="d-flex gap-2">
+        <p class="fw-bold">#{{ticket.id}}</p>
+        <p class="m-0">{{ticket.title}}</p>
+      </div>  
+      <div class="d-flex align-items-center gap-1">
+        <p class="status-text {{ ticket.status|add:'-text' }}">{{ticket.get_status_display}}</p>
+        <div class="status-ball {{ ticket.status|add:'-fill' }}"></div>
+      </div>
     </a>
     {%endfor%}
   </div>
 </div>
-{% endblock %} ```
+{% endblock %}

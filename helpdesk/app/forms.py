@@ -14,3 +14,8 @@ class TicketDetailForm(forms.Form):
     date = datetime.now()
     priority = forms.CharField(label="Priority", max_length=100)
     closed = False
+    
+class CommentForm(forms.Form):
+    comment = forms.CharField(label="Leave a comment", max_length=1000, widget=forms.Textarea)
+    date = datetime.now()
+    ticket = ""

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from .models import Ticket
-from .forms import TicketDetailForm, TicketInitialForm
+from .forms import CommentForm, TicketDetailForm, TicketInitialForm
 # Create your views here.
 
 def index(response):
@@ -23,26 +23,24 @@ def index(response):
         form = TicketInitialForm()
         return render(response, "app/home.html", {"tickets": tickets, "form": form})
 
-    tickets = Ticket.objects.all()
-    if response.method == "POST":
-        form = TicketInitialForm(response.POST)
-        if form.is_valid():
-            n = form.cleaned_data["title"]
-            d = ""
-            p = "low"
-            t = Ticket(title=n, description=d, priority=p, date=datetime.now(), closed=False)
-            t.save()
-    else:
-        form = TicketInitialForm()
-    return render(response, "app/home.html", {"tickets": tickets, "form": form})
-
 def ticket(response, id):
     ticket = Ticket.objects.get(id=id)
-    return render(response, "app/ticket.html", {"ticket": ticket})
+    if response.method == "POST":
+        form = CommentForm(response.POST)
+        if form.is_valid():
+            c = form.cleaned_data["comment"]
+            d = datetime.now()
+            t = Ticket.objects.get(id=id)
+            t.ticketcomment_set.create(comment=c, date=d)
+            t.save()
+            form = CommentForm()
+            return render(response, "app/ticket.html", {"ticket": ticket, "form": form})
+    else:
+        form = CommentForm()
+        return render(response, "app/ticket.html", {"ticket": ticket, "form": form})
 
 def editticket(response, id):
     ticket = Ticket.objects.get(id=id)
-    print(ticket)
     if response.method == "POST":
         if ticket.status == "draft":
             form = TicketDetailForm(response.POST)
@@ -56,7 +54,10 @@ def editticket(response, id):
                 t.priority = p
                 t.status = "inProgress"
                 t.save()
-        else: 
+                form = TicketDetailForm()
+                return redirect('/')
+
+        else:
             print("Ticket is not a draft. Cannot edit.")
     else:
         form = TicketDetailForm(initial={"title": ticket.title, "description": ticket.description, "priority": ticket.priority})

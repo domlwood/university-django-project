@@ -1,12 +1,23 @@
 {% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+<style>
+    form p {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+{% endblock %}
 {% block title %}
 Help Desk - Edit Ticket
 {% endblock %}
 {% block content %}
-<h1>Edit Ticket {{ticket.id}}</h1>
-<form method="post">
-    {% csrf_token %} {{form.as_p}}    <button type="submit" name="save">Send</button>
-</form>
+<h1 class="text-center">#{{ticket.id}} - {{ticket.title}}</h1>
+<div class="row justify-content-md-center">
+    <form class="col-sm-12 col-md-8 col-lg-6" method="post">
+        {% csrf_token %} {{ form|crispy }}   <button class="btn btn-dark" type="submit" name="save">Create Ticket</button>
+    </form>
+</div>
 {% endblock %}
 
 ```
