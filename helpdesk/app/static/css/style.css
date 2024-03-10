@@ -4,9 +4,6 @@
     font-family: "Inter", sans-serif;
     color: black;
 }
-:root {
-    --bs-body-bg: #F9F9F9!important;
-}
 
 a {
     color: #007bff; /* change to the color you want */ 
@@ -16,6 +13,11 @@ a {
 
 html {
     background-color: #F9F9F9!important;
+}
+
+body {
+    height: 100vh;
+    max-height: 100vh;
 }
 
 .tight {

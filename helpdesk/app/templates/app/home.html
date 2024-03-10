@@ -109,9 +109,9 @@ Home {% endblock %} {% block head %}
 </style>
 {% endblock %} {% block content %}
 <div class="max-height row justify-content-md-center">
-  <div class="col-sm-12 col-md-8 col-lg-6 m-auto">
-    <h2 class="fs-4 tight">Open a Ticket</h2>
-    <form method="post">
+  <div class="col-sm-12 col-md-8 col-lg-6 pb-5">
+    <h2 class="fs-4 tight pb-2">Open a Ticket</h2>
+    <form autocomplete="off" method="post">
       {% csrf_token %} {{form.as_p}}
       <button type="submit" name="save">
         <img alt="search icon" src="{% static 'icons/next.svg' %}" />
@@ -119,8 +119,8 @@ Home {% endblock %} {% block head %}
     </form>
   </div>
 
-  <div class="overflow-auto pt-5 col-sm-12 col-lg-8 m-auto">
-    <h2 class="fs-4 tight font-weight-light">My Tickets</h2>
+  <div class="overflow-auto col-sm-12 col-lg-8">
+    <h2 class="fs-4 tight font-weight-light pb-2">My Tickets</h2>
     {%for ticket in tickets%}
     <a
       href="{% if ticket.status == 'draft' %}{% url 'editticket' ticket.id %}{% else %}{% url 'ticket' ticket.id %}{% endif %}"

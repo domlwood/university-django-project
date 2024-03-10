@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      .nav img {
+        height: 32px;
+      }
+    </style>
     {% block head %} {% endblock %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link
@@ -12,12 +17,14 @@
     />
     <title>{% block title %}Help Desk{% endblock %}</title>
   </head>
-  <body class="bg-light">
-    <nav class="container d-flex justify-content-between align-items-center">
-      <a href="/" class="fs-2 text fw-bolder">Help Desk</a>
-      <p>panel</p>
+  <body class="vh-100 bg-light">
+    <nav class="bg-white p-2">
+      <div class="nav container d-flex justify-content-between align-items-center">
+        <a href="/" class="fs-2 text-secondary text fw-bolder">Help<span class="text-info">Desk</span></a>
+        <img class="img-fluid" alt="user icon" src="{% static 'icons/user.svg' %}" />
+      </div>
     </nav>
-    <div class="container mt-5" id="content">
+    <div class="container mh-100 mt-5" id="content">
       {% block content %} {% endblock %}
     </div>
   </body>

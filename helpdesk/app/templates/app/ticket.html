@@ -1,18 +1,50 @@
 {% extends 'app/base.html' %} {% load crispy_forms_tags %} {% block title %}
-Help Desk - View Ticket {% endblock %} {% block content %}
-<div class="row gap-4">
+Help Desk - View Ticket {% endblock %}
+{% load static %}
+{% block head %}
+<style>
+  #div_id_comment .form-control {
+    height: 100px;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="row gap-4 mh-100">
   <div class="col bg-white p-4 rounded">
-    <h1 class="fs-2">Ticket Information</h1>
+    <h1 class="fs-3">Ticket Information</h1>
     <hr />
     <p class="pt-2 m-0"><b>Ticket Title:</b> {{ticket.title}}</p>
-    <p class="pb-2"><b>Ticket Priority:</b> {{ticket.priority}}</p>
+    <p class="m-0"><b>Ticket Priority:</b> {{ticket.priority}}</p>
+    <p class="pb-2"><b>Assigned Technician:</b> 
+      {% if ticket.assignedStaff %}
+        {{ ticket.assignedStaff.first_name }} {{ ticket.assignedStaff.last_name }}
+      {% else %}
+        N/A
+      {% endif %}
+    </p>
+    
     <p><b>Ticket Description:</b> {{ticket.description}}</p>
   </div>
-  <div class="col bg-white p-4 rounded">
-    {% for ticketComments in ticket.ticketcomment_set.all %}
-    <h4>{{ticketComments.comment}}</h4>
+  <div class="mh-100 col bg-white p-4 rounded">
+    <div class="border-bottom">
+      <h1 class="fs-3">Comments <span class="fw-light">({{ticket.ticketcomment_set.all.count}})</span></h1>
+    </div>
+    {% for ticketComment in ticket.ticketcomment_set.all %}
+    <div class="mh-100 overflow-scroll row p-3 border-bottom">
+      <div class="col-1">
+        <img class="img-fluid" alt="user icon" src="{% static 'icons/user.svg' %}" />
+      </div>
+      <div class="col">
+        <div class="d-flex gap-1">
+          <p class="m-0 fw-bold">{{ticketComment.user.first_name}} {{ticketComment.user.last_name}} - </p>
+          <p class="m-0">{{ticketComment.date}}</p>
+        </div>
+        <div>
+          <p class="m-0">{{ticketComment.comment}}</p>
+        </div>
+      </div>
+    </div>
     {% endfor %}
-    <form class="w-100 col-sm-12 col-md-8 col-lg-6" method="post">
+    <form class="pt-3 w-100 col-sm-12 col-md-8 col-lg-6" method="post">
       {% csrf_token %} {{ form|crispy }}
       <button class="btn btn-dark" type="submit" name="save">Comment</button>
     </form>

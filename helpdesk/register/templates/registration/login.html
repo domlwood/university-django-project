@@ -1,0 +1,14 @@
+{% extends "register/base.html" %}
+{% block title %}Help Desk - Login{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="pt-5 col-sm-12 col-md-8 col-lg-6">
+    <form method="post" class="form-group">
+        {% csrf_token %} {{ form|crispy }}
+        <p class="pt-1">Don't have an account? Create one <a href="/register">here</a></p>
+        <button type="submit" class="btn btn-success">Login</button>
+    </form>
+</div>
+</div>
+{% endblock %}

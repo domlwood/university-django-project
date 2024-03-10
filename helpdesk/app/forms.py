@@ -12,10 +12,10 @@ class TicketDetailForm(forms.Form):
     title = forms.CharField(label="Title", max_length=200)
     description = forms.CharField(widget=forms.Textarea)
     date = datetime.now()
-    priority = forms.CharField(label="Priority", max_length=100)
+    priority = forms.ChoiceField(label="Priority", choices=[("low", "Low"), ("medium", "Medium"), ("high", "High")])
     closed = False
     
 class CommentForm(forms.Form):
-    comment = forms.CharField(label="Leave a comment", max_length=1000, widget=forms.Textarea)
+    comment = forms.CharField(label="Leave a comment", max_length=350, widget=forms.Textarea)
     date = datetime.now()
     ticket = ""

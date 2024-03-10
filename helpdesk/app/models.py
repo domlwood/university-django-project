@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Ticket(models.Model):
@@ -13,7 +14,8 @@ class Ticket(models.Model):
         ('medium', 'Medium'),
         ('high', 'High'),
     ]
-
+    client = models.ForeignKey(User, on_delete=models.CASCADE, related_name='client', blank=True, null=True)
+    assignedStaff = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='assignedStaff')
     title = models.CharField(max_length=100)
     description = models.TextField()
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='low')
@@ -27,6 +29,6 @@ class TicketComment(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     comment = models.TextField()
     date = models.DateTimeField()
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return self.comment
