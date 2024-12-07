@@ -11,8 +11,8 @@ All users can leave comments on tickets.
 
 ## Getting started
 - setup a virtual environment: `python3 -m venv env`
-- start the virtual environment: `source venv/bin/activate`
-- install dependencies: `pip3 install -r dependencies.txt`
+- start the virtual environment: `source env/bin/activate`
+- install dependencies: `pip3 install -r requirements.txt`
 
 - start the app: 
     - `cd helpdesk`

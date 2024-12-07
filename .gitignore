@@ -1,0 +1,5 @@
+## env generation files
+env
+
+## caching files
+**/**/__pycache__
