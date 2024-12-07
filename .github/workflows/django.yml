@@ -37,7 +37,7 @@ jobs:
     - name: Deploy to Render
       uses: JorgeLNJunior/render-deploy@v1.4.4
       with:
-        service_id: srv-cta88nbtq21c73c1nrkg
+        service_id: ${{ secrets.RENDER_SERVICE_ID }}
         api_key: ${{ secrets.RENDER_API_KEY }}
         clear_cache: true
         wait_deploy: true
