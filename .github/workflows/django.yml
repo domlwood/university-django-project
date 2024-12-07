@@ -35,7 +35,7 @@ jobs:
 
     # Step 5: Deploy to Render
     - name: Deploy to Render
-      if: success()  # Ensures deployment runs only if previous steps succeed
+      if: success()
       env:
         RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
       run: |
@@ -43,4 +43,6 @@ jobs:
           -H "Authorization: Bearer $RENDER_API_KEY" \
           -H "Content-Type: application/json" \
           -d '{"clearCache": true}' \
-          https://api.render.com/v1/services/srv-cta88nbtq21c73c1nrkg/deploys
+          https://api.render.com/v1/services/srv-cta88nbtq21c73c1nrkg/deploys -v
+
+
