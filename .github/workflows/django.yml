@@ -32,7 +32,9 @@ jobs:
 
     # Step 4: Run tests
     - name: Run Tests
-      run: python manage.py test
+      run: 
+        cd helpdesk
+        python manage.py test
 
     # Step 5: Deploy to Render
     - name: Deploy to Render

@@ -12,8 +12,8 @@ All users can leave comments on tickets.
 ## Getting started
 - setup a virtual environment: `python3 -m venv env`
 - start the virtual environment: `source env/bin/activate`
+- enter the helpdesk app: `cd helpdesk`
 - install dependencies: `pip3 install -r requirements.txt`
 
 - start the app: 
-    - `cd helpdesk`
     - `python3 manage.py runserver`
