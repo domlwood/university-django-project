@@ -31,7 +31,7 @@ jobs:
     - name: Run Tests
       run: |
         cd helpdesk
-        python manage.py test
+        pytest
 
     # Step 5: Deploy to Render
     - name: Deploy to Render
