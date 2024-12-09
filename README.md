@@ -14,7 +14,7 @@ User login details can be found in `docs/accounts.md`
 
 ## Dependencies
 - [python](https://www.python.org/)
-- All other dependencies are outlined in the [requirements folder](requirements.txt)
+- All other dependencies are outlined in the [requirements folder](helpdesk/requirements.txt)
 
 ## Getting started
 - setup a virtual environment: `python3 -m venv env`
