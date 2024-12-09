@@ -5,6 +5,13 @@ Admins have the added ability to delete, while also having access to every ticke
 
 All users can leave comments on tickets.
 
+## Quick Links
+There is a working example at:
+https://university-django-project.onrender.com
+The github repo is available at:
+https://github.com/domlwood/university-django-project
+User login details can be found in `docs/accounts.md`
+
 ## Dependencies
 - [python](https://www.python.org/)
 - All other dependencies are outlined in the [requirements folder](requirements.txt)
