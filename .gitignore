@@ -3,6 +3,3 @@ env
 
 ## caching files
 **/**/__pycache__
-
-## IDE files
-**/staticfiles
