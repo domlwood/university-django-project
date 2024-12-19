@@ -26,3 +26,7 @@ body {
 .tight {
     letter-spacing: -0.64px;
 }
+
+button {
+    color: white!important;
+}
