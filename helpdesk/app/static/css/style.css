@@ -27,6 +27,6 @@ body {
     letter-spacing: -0.64px;
 }
 
-button {
+button .btn-dark {
     color: white!important;
 }
